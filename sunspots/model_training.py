@@ -144,10 +144,10 @@ def main():
 
         return forecast
 
-    forecast_series = series[train_set_size + val_set_size - window_size:-1]
+    forecast_series = series[train_set_size + val_set_size :-1]
     forecast = model_forecast(model, forecast_series, window_size, batch_size)
     results = forecast.squeeze()
-    test_mae = tf.keras.metrics.mean_absolute_error(x_test, results).numpy()
+    test_mae = tf.keras.metrics.mean_absolute_error(x_test[window_size:], results).numpy()
     print(f'Test MAE is {test_mae}')
 
 
