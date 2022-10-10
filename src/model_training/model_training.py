@@ -3,7 +3,7 @@
 import pandas as pd
 import numpy as np
 import tensorflow as tf
-from utils import get_silso_dataset_info
+from sunspots.utils import get_silso_dataset_info
 
 
 def main():
@@ -144,16 +144,11 @@ def main():
 
         return forecast
 
-    forecast_series = series[train_set_size + val_set_size :-1]
+    forecast_series = series[train_set_size + val_set_size:-1]
     forecast = model_forecast(model, forecast_series, window_size, batch_size)
     results = forecast.squeeze()
     test_mae = tf.keras.metrics.mean_absolute_error(x_test[window_size:], results).numpy()
     print(f'Test MAE is {test_mae}')
-
-
-
-
-
 
 
 if __name__ == '__main__':
