@@ -1,0 +1,7 @@
+python: "3.10.7"
+# Dependencies required to build packages. This field is optional.
+build_dependencies:
+  - pip
+# Dependencies required to run the project.
+dependencies:
+  - click==8.1.3

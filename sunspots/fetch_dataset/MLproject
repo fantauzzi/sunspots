@@ -1,0 +1,14 @@
+name: fetch_dataset
+python_env: python_env.yaml
+
+entry_points:
+  main:
+    parameters:
+      url:
+        description: URL where to fetch the SILSO dataset from.
+        type: string
+      path:
+        description: Path where to download the dataset, can be relative or absolute.
+        type: string
+    command: >-
+      python fetch_dataset.py  --url {url}  --path {path}   
