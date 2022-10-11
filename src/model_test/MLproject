@@ -1,0 +1,17 @@
+name: model_test
+python_env: python_env.yaml
+
+entry_points:
+  main:
+    parameters:
+      model_file:
+        description: Input file with the model to be tested.
+        type: string
+      test_file:
+        description: File with the dataset for model testing.
+        type: string
+
+    command: >-
+      python model_test.py  --model_file {model_file} --test_file {test_file}   
+  
+  

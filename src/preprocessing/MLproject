@@ -1,0 +1,22 @@
+name: preprocessing
+python_env: python_env.yaml
+
+entry_points:
+  main:
+    parameters:
+      input_file:
+        description: File with the dataset for training/validation/test.
+        type: string
+      train_size:
+        description: Size of the train/validation set. If less than 1, it is meant to be the fraction of the overall
+          dataset to be used for training; if at least one, it is meant to be the size in samples.
+        type: float
+      train_file:
+        description: Output file with the pre-processed training/validation set.
+        type: string
+      test_file:
+        description: Output file with the pre-processed test set.
+        type: string
+
+    command: >-
+      python preprocessing.py  --input_file {input_file} --train_size {train_size} --train_file {train_file} --test_file {test_file}   
