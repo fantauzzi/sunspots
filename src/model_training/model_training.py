@@ -1,14 +1,18 @@
 # Credits: model taken from Coursera's "Sequences, Time Series and Prediction" course by DeepLearning.AI
-
 import pandas as pd
 import numpy as np
 import tensorflow as tf
-from sunspots.utils import get_silso_dataset_info
+import click
 
+# mlflow run . -P input_file="../../data/SN_m_tot_V2.0.csv"
 
-def main():
-    _, dataset_filepath = get_silso_dataset_info()
-    df = pd.read_csv(dataset_filepath)
+@click.command()
+@click.option('--input_file',
+              required=True,
+              help='File with the dataset for training/validation/test')
+def main(input_file: str):
+    # _, input_file = get_silso_dataset_info()
+    df = pd.read_csv(input_file)
     df = df[(df.n_observations > 0) & (df.provisional == 'n')]
     dataset_size = len(df)
     time = np.arange(0, dataset_size - 1, 1)

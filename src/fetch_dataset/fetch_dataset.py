@@ -4,7 +4,7 @@ from pathlib import Path
 import os
 import click
 
-# mlflow run fetch_dataset -P url="https://www.sidc.be/silso/DATA/SN_m_tot_V2.0.txt" -P path="../../data"
+# mlflow run . -P url="https://www.sidc.be/silso/DATA/SN_m_tot_V2.0.txt" -P path="../../data"
 
 print(f'Working dir is {os.getcwd()}')
 
@@ -33,7 +33,7 @@ def fetch_silso_dataset(dataset_url: str, dataset_filepath: str) -> str:
 @click.option('--path',
               required=True,
               help='Path where to download the dataset, can be relative or absolute.')
-def main(url: str | None, path: str | None) -> None:
+def main(url: str, path: str) -> None:
     click.echo(f'URL is {url} and path is {path}')
     dataset_filename = Path(url).stem + '.csv'
     dataset_filepath = f'{path}/{dataset_filename}'

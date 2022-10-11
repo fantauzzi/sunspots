@@ -1,0 +1,11 @@
+name: model_training
+python_env: python_env.yaml
+
+entry_points:
+  main:
+    parameters:
+      input_file:
+        description: File with the dataset for training/validation/test.
+        type: string
+    command: >-
+      python model_training.py  --input_file {input_file}   
