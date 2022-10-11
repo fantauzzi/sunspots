@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import tensorflow as tf
 import click
+from pathlib import Path
 
 # mlflow run . -P input_file="../../data/SN_m_tot_V2.0.csv"
 
@@ -11,8 +12,8 @@ import click
               required=True,
               help='File with the dataset for training/validation/test')
 def main(input_file: str):
-    # _, input_file = get_silso_dataset_info()
-    df = pd.read_csv(input_file)
+    input_file_corrected = str('../../' / Path(input_file))
+    df = pd.read_csv(input_file_corrected)
     df = df[(df.n_observations > 0) & (df.provisional == 'n')]
     dataset_size = len(df)
     time = np.arange(0, dataset_size - 1, 1)

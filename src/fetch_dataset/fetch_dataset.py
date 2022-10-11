@@ -36,7 +36,7 @@ def fetch_silso_dataset(dataset_url: str, dataset_filepath: str) -> str:
 def main(url: str, path: str) -> None:
     click.echo(f'URL is {url} and path is {path}')
     dataset_filename = Path(url).stem + '.csv'
-    dataset_filepath = f'{path}/{dataset_filename}'
+    dataset_filepath = f'../../{path}/{dataset_filename}'
     fetch_silso_dataset(url, dataset_filepath)
 
 

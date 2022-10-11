@@ -1,3 +1,5 @@
+main:
+  steps: all
 dataset:
   url: https://www.sidc.be/silso/DATA/SN_m_tot_V2.0.txt
-  path: ../data
+  path: data
