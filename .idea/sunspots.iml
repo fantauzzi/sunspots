@@ -9,6 +9,8 @@
       <excludeFolder url="file://$MODULE_DIR$/src/fetch_dataset/mlruns" />
       <excludeFolder url="file://$MODULE_DIR$/src/model_training/mlruns" />
       <excludeFolder url="file://$MODULE_DIR$/src/outputs" />
+      <excludeFolder url="file://$MODULE_DIR$/src/model_test/mlruns" />
+      <excludeFolder url="file://$MODULE_DIR$/src/preprocessing/mlruns" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.10 (python3.10.7) (2)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

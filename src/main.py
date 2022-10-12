@@ -10,7 +10,7 @@ import mlflow
 def main(config: DictConfig):
     print(f'Configuration ===================\n{config}')
 
-    available_steps = ['fetch', 'train']
+    available_steps = ['fetch', 'preprocess', 'train', 'test']
     required_steps = available_steps if config['main']['steps'] == 'all' else config['main']['steps'].split(',')
 
     if 'fetch' in required_steps:
@@ -18,10 +18,24 @@ def main(config: DictConfig):
                    entry_point='main',
                    parameters={'url': config['dataset']['url'],
                                'path': config['dataset']['path']})
+    if 'preprocess' in required_steps:
+        mlflow.run(uri=str(Path(hydra.utils.get_original_cwd()) / 'preprocessing'),
+                   entry_point='main',
+                   parameters={'input_file': str(Path(config['dataset']['path']) / 'SN_m_tot_V2.0.csv'),
+                               'train_size': 0.8,
+                               'train_file': str(Path(config['dataset']['path']) / 'train.csv'),
+                               'test_file': str(Path(config['dataset']['path']) / 'test.csv')})
     if 'train' in required_steps:
         mlflow.run(uri=str(Path(hydra.utils.get_original_cwd()) / 'model_training'),
                    entry_point='main',
-                   parameters={'input_file': str(Path(config['dataset']['path']) / 'SN_m_tot_V2.0.csv')})
+                   parameters={'train_file': str(Path(config['dataset']['path']) / 'train.csv'),
+                               'validation_size': 0.33333,
+                               'model_file': str(Path(config['dataset']['path']) / 'trained_tf_model')})
+    if 'test' in required_steps:
+        mlflow.run(uri=str(Path(hydra.utils.get_original_cwd()) / 'model_test'),
+                   entry_point='main',
+                   parameters={'model_file': str(Path(config['dataset']['path']) / 'trained_tf_model'),
+                               'test_file': str(Path(config['dataset']['path']) / 'test.csv')})
 
 
 if __name__ == '__main__':

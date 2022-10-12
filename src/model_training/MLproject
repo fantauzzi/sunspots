@@ -4,8 +4,19 @@ python_env: python_env.yaml
 entry_points:
   main:
     parameters:
-      input_file:
+      train_file:
         description: File with the dataset for training/validation/test.
         type: string
+      validation_size:
+        description: Size of the validation set. If less than 1, it is meant to be the fraction of the training set to
+          be used for validation; if at least 1, it is meant to be the number of samples from the training set to be
+          used for validation instead,
+        type: float
+      model_file:
+        description: Output file where the trained model will be saved.
+        type: string
     command: >-
-      python model_training.py  --input_file {input_file}   
+      python model_training.py  --train_file {train_file} --validation_size {validation_size}  --model_file {model_file}
+  
+  
+  
