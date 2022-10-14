@@ -16,7 +16,6 @@ entry_points:
         description: Output file where the trained model will be saved.
         type: string
     command: >-
-      python model_training.py  --train_file {train_file} --validation_size {validation_size}  --model_file {model_file}
-  
+      PYTHONPATH='..' python model_training.py  --train_file {train_file} --validation_size {validation_size}  --model_file {model_file}
   
   

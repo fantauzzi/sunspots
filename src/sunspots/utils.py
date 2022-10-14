@@ -1,4 +1,17 @@
 import tensorflow as tf
+from pathlib import Path
+import hydra
+from hydra.core.global_hydra import GlobalHydra
+
+hydra_config_file_path = Path.cwd() / '../../config'
+hydra_config_file_name = 'config.yaml'
+
+
+def init_hydra():
+    if not GlobalHydra().is_initialized():
+        hydra.initialize_config_dir(config_dir=str(hydra_config_file_path), version_base=None)
+    params = hydra.compose(config_name=hydra_config_file_name)
+    return params
 
 
 def model_forecast(model, series, window_size, batch_size):

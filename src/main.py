@@ -2,14 +2,13 @@ from pathlib import Path
 import hydra
 from omegaconf import DictConfig
 import mlflow
+from sunspots.utils import hydra_config_file_name, hydra_config_file_path
 
 
 # mlflow run . -P steps='all' -P overrides='dataset.path=data'
 
-@hydra.main(version_base=None, config_path='.', config_name='config.yaml')
+@hydra.main(version_base=None, config_path=hydra_config_file_path, config_name=hydra_config_file_name)
 def main(config: DictConfig):
-    print(f'Configuration ===================\n{config}')
-
     available_steps = ['fetch', 'preprocess', 'train', 'test']
     required_steps = available_steps if config['main']['steps'] == 'all' else config['main']['steps'].split(',')
 

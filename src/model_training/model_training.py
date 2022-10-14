@@ -4,9 +4,16 @@ import numpy as np
 import tensorflow as tf
 import click
 from pathlib import Path
+from sunspots.utils import init_hydra
+
+# import hydra
+# from hydra.core.global_hydra import GlobalHydra
+
+# mlflow run . -P train_file="data/SN_m_tot_V2.0.csv" -P validation_size=0.2 -P model_file="data/trained_tf_model"
 
 
-# mlflow run . -P input_file="../../data/SN_m_tot_V2.0.csv"
+params = init_hydra()
+
 
 @click.command()
 @click.option('--train_file',
@@ -79,16 +86,15 @@ def main(train_file: str, validation_size: float, model_file: str) -> None:
         return dataset
 
     # Parameters
-    window_size = 30
-    batch_size = 32
-    shuffle_buffer_size = 1000
-    epochs = 100
+    window_size = params['model']['window_size']
+    batch_size = params['model']['batch_size']
+    shuffle_buffer_size = params['model']['shuffle_buffer_size']
+    epochs = params['model']['training_epochs']
 
     # Generate the dataset windows
     train_set = windowed_dataset(x_train, window_size, batch_size, shuffle_buffer_size)
 
     # Build the model
-    # Build the Model
     model = tf.keras.models.Sequential([
         tf.keras.layers.Conv1D(filters=64, kernel_size=3,
                                strides=1,

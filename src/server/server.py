@@ -2,7 +2,14 @@ from fastapi import FastAPI, Query
 import tensorflow as tf
 from pathlib import Path
 import numpy as np
+import hydra
+from hydra.core.global_hydra import GlobalHydra
 from sunspots.utils import model_forecast
+
+if not GlobalHydra().is_initialized():
+    config_file_path = Path.cwd() / '../../config'
+    hydra.initialize_config_dir(config_dir=str(config_file_path), version_base=None)
+params = hydra.compose(config_name='config.yaml')
 
 """
 curl -X 'GET' \
@@ -24,7 +31,7 @@ model.summary()
 
 @app.get('/')
 async def root():
-    return {'greeting', 'Howdy! This is the home page of the API for sunspots prediction.'}
+    return {'greeting': 'Howdy! This is the home page of the API for sunspots prediction.'}
 
 
 @app.get('/prediction/')
@@ -37,9 +44,10 @@ async def prediction(sample: str = Query()):
 
     # Print the model summary
 
-    sample2 = sample.split(',')
-    sample2 = np.array([float(item) for item in sample2])
-    forecast_series2 = sample2[-window_size:]
-    forecast2 = model_forecast(model, forecast_series2, window_size, batch_size)
-    results2 = forecast2.squeeze()
-    return {'forecast': float(results2)}
+    x = sample.split(',')
+    assert len(x) >= window_size
+    x = np.array([float(item) for item in x])
+    x = x[-window_size:]
+    y_pred = model_forecast(model, x, window_size, batch_size)
+    results = y_pred.squeeze()
+    return {'forecast': float(results)}

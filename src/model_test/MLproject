@@ -12,6 +12,6 @@ entry_points:
         type: string
 
     command: >-
-      python model_test.py  --model_file {model_file} --test_file {test_file}   
+      PYTHONPATH='..' python model_test.py  --model_file {model_file} --test_file {test_file}   
   
   

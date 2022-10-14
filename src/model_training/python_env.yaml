@@ -8,4 +8,5 @@ dependencies:
   - numpy==1.23.3
   - pandas==1.5.0
   - tensorflow==2.10.0
+  - hydra-core==1.2.0
 
